@@ -11,6 +11,7 @@ def sinusoidal():
     ...
     return
 
+#Harvesting constant p
 def logistic(t,y):
   return a*y*(1-y/k)-p
 
