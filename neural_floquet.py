@@ -12,6 +12,7 @@ from tensorflow.keras import layers
 from kerastuner import HyperParameters
 from kerastuner.tuners import RandomSearch
 import random
+#use numba
 
 def build_model():
     model = keras.Sequential([
