@@ -1,3 +1,5 @@
+#This file turns the Floquet algorithms into Neural Network algorithms. 
+
 import tensoflow as tf
 #Helper libraries
 import pandas as pd

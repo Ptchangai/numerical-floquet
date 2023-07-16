@@ -1,3 +1,5 @@
+#Define numemrical integration methods to solve differential equaions
+#Use assimulo.
 from scipy.optimize import fsolve
 
 def RK4step(f,uold, told, h):
@@ -14,9 +16,6 @@ def RK4step(f,uold, told, h):
 def runge_kutta():
     ...
     return
-
-
-
 
 
 def lagrange_polynomials(x,xm,i):
