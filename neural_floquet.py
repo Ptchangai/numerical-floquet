@@ -39,23 +39,22 @@ def tune_build_model(hp):
                   metrics=['mean_absolute_error'])
     return model
 
-def tune_model(model,model_name='Model'):
+def tune_model(model,model_name='Model', max_trials=10):
     tuner = RandomSearch(build_model,
                          objective='mean_squared_error',
-                         max_trials=10,
+                         max_trials=max_trials,
                          executions_per_trial=3,
                          directory='Tuning_'+model_name,
                          project_name='Neural_Floquet')
     
-def train_model(model,Xdf,Ydf):
-
+def train_model(model,Xdf,Ydf, epochs=100, batch_size=70, validation_split=0.1,shuffle=True):
     model=build_model()
     history = model.fit(Xdf, 
                         Ydf, 
-                        epochs=100,
-                        batch_size=70,
-                        validation_split=0.1,
-                        shuffle=True)
+                        epochs=epochs,
+                        batch_size=batch_size,
+                        validation_split=validation_split,
+                        shuffle=shuffle)
     plt.plot(history.history['loss'], label='train')
     plt.plot(history.history['val_loss'], label='test')
     plt.legend()

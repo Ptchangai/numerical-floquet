@@ -1,6 +1,7 @@
 #Define numemrical integration methods to solve differential equaions
 #Use assimulo.
 from scipy.optimize import fsolve
+from assimulo.solvers import RungeKutta34
 
 def RK4step(f,uold, told, h):
   uold=np.array(uold)

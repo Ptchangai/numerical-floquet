@@ -1,4 +1,9 @@
+#Define the differential equations on which we will test the Floquet algorithms 
+
 import numpy as np
+from assimulo.problem import Explicit_Problem
+
+#mod = Explicit_Problem(rhs, y0, t0)
 a=1
 k=2
 r=5
@@ -7,9 +12,9 @@ p=0
 def exponential(t,y):
     return (r*y)
 
-def sinusoidal():
-    ...
-    return
+def sinusoidal(t,y):
+    R= [y[1], -y[0]]
+    return R
 
 #Harvesting constant p
 def logistic(t,y):
