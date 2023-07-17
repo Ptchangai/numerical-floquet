@@ -1,5 +1,10 @@
 import numpy as np
 
+def jacobian():
+    ...
+    return
+
+
 def power_iteration(A):
     e=lambda x: x.T@A@x
     la,_=np.linalg.eig(A)
@@ -11,3 +16,11 @@ def power_iteration(A):
         l= e(x)
     error = abs(l-lmax)
     return l, error
+
+def monodromy_matrix(diff_eq_func, jacobian_func, t):
+    ...
+    return
+
+def monodromy_matrix_shooting(diff_eq_func, jacobian_func, t):
+    ...
+    return
