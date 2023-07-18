@@ -1,7 +1,8 @@
 #Define numemrical integration methods to solve differential equaions
 #Use assimulo.
-from scipy.optimize import fsolve
+from scipy.optimize import fsolve, solve_ivp
 from assimulo.solvers import RungeKutta34
+import numpy as np 
 
 def RK4step(f,uold, told, h):
   uold=np.array(uold)
@@ -38,18 +39,12 @@ def collocation_methods():
     ...
     return
 
-
-
 def shooting_methods():
     v0, = fsolve(objective_shooting, v0)
     return v0
 
-def objective_shooting(v0):
-    sol = solve_ivp(F, [t0, t1], \
+def objective_shooting(v0, func):
+    sol = solve_ivp(func, [t0, t1], \
             [y0, v0], t_eval = t_eval)
     y = sol.y[0]
     return y[-1] - 50
-
- #Find the roots of a function.
-print(v0)
-
