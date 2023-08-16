@@ -15,6 +15,7 @@ import random
 #use numba
 
 def build_model():
+    """Create architecture of our Neural Network"""
     model = keras.Sequential([
     keras.layers.InputLayer(input_shape=(3,)), 
     keras.layers.Dense(32, activation='sigmoid'),
@@ -29,6 +30,7 @@ def build_model():
 
 
 def tune_build_model(hp):
+    """Build tuneable model"""
     model = keras.Sequential()
     model.add(keras.layers.InputLayer(input_shape=(3,)))
     model.add(layers.Dense(units=hp.Int('units', min_value=8, max_value=64, step=8),
@@ -48,7 +50,7 @@ def tune_model(model,model_name='Model', max_trials=10):
                          project_name='Neural_Floquet')
     
 def train_model(model,Xdf,Ydf, epochs=100, batch_size=70, validation_split=0.1,shuffle=True):
-    model=build_model()
+    model = build_model()
     history = model.fit(Xdf, 
                         Ydf, 
                         epochs=epochs,
@@ -60,5 +62,10 @@ def train_model(model,Xdf,Ydf, epochs=100, batch_size=70, validation_split=0.1,s
     plt.legend()
     return
 
+def create_dataset(func):
+    ...
+    return
+
 def test_model():
+    ...
     return

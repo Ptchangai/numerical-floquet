@@ -1,6 +1,7 @@
 import numpy as np
 
 def jacobian_matrix(func, x, params):
+    """Computes the Jacobian of function func at point x"""
     epsilon = 1e-6
     n = len(x)
     J = np.zeros((n, n))
@@ -14,14 +15,15 @@ def jacobian_matrix(func, x, params):
 
 
 def power_iteration(A):
-    e=lambda x: x.T@A@x
-    la,_=np.linalg.eig(A)
+    """Computes the largest eigenvalue of the matrix A"""
+    e = lambda x: x.T@A@x
+    la, _ = np.linalg.eig(A)
     lmax = max(abs(la))
-    x=np.ones((4,), dtype=float)
+    x = np.ones((4,), dtype=float)
     for i in range(50):
-        z=A@x
-        x=z/np.linalg.norm(z)
-        l= e(x)
+        z = A@x
+        x = z/np.linalg.norm(z)
+        l = e(x)
     error = abs(l-lmax)
     return l, error
 
@@ -30,5 +32,6 @@ def monodromy_matrix(diff_eq_func, jacobian_func, t):
     return
 
 def monodromy_matrix_shooting(diff_eq_func, jacobian_func, t):
+    """Alternative method to compute the Monodromy matrix using shooting methods"""
     ...
     return
