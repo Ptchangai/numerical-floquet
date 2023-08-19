@@ -12,8 +12,9 @@ from tensorflow.keras import layers
 from kerastuner import HyperParameters
 from kerastuner.tuners import RandomSearch
 import random
-#use numba
+#Todo: use numba
 
+#Todo: add possibility for more models
 def build_model():
     """Create architecture of our Neural Network"""
     model = keras.Sequential([
@@ -26,6 +27,7 @@ def build_model():
     model.compile(metrics='mean_absolute_error', loss='mean_squared_error' )
     model.summary()
     return model
+
 
 
 
