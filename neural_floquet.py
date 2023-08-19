@@ -12,6 +12,7 @@ from tensorflow.keras import layers
 from kerastuner import HyperParameters
 from kerastuner.tuners import RandomSearch
 import random
+from scipy.integrate import odeint #Replace by Assimulo integrator
 #Todo: use numba
 
 #Todo: add possibility for more models
@@ -64,9 +65,22 @@ def train_model(model,Xdf,Ydf, epochs=100, batch_size=70, validation_split=0.1,s
     plt.legend()
     return
 
-def create_dataset(func):
-    ...
-    return
+def create_dataset(ODE, length, t0, N, parameters):
+    dataset=[]
+    for i in range(0,length):
+            y0=[random.randrange(0, 200000)/10000,random.randrange(0, 200000)/10000] #(Initial conditions)
+            h=random.randrange(100, 50000)/100000
+            ti=random.randrange(1, N-1) #(=> Make it several points?)
+            t = np.arange(t0,ti,h)
+            sol = odeint(ODE, y0, t, args=parameters)
+            sol_x1, sol_x2= sol.T
+            if np.abs(sol_x2[-1]) < 100 or np.abs(sol_x1[-1]) < 100:
+                dataset.append([y0[0],y0[1],h,ti,sol_x1[-1],sol_x2[-1]])
+    df=pd.DataFrame(dataset,columns=['X0','Y0','dt','t','X','Y'])
+    df.head()
+    Xdf=df.iloc[:, 0:4]
+    Ydf=df.iloc[:, 4:]
+    return [Xdf, Ydf]
 
 def test_model():
     ...
