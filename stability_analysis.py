@@ -14,13 +14,13 @@ def jacobian_matrix(func, x, params):
     return J
 
 
-def power_iteration(A):
+def power_iteration(A,n=50):
     """Computes the largest eigenvalue of the matrix A"""
     e = lambda x: x.T@A@x
     la, _ = np.linalg.eig(A)
     lmax = max(abs(la))
     x = np.ones((4,), dtype=float)
-    for i in range(50):
+    for i in range(n):
         z = A@x
         x = z/np.linalg.norm(z)
         l = e(x)
