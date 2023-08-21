@@ -1,33 +1,31 @@
 #Define the differential equations on which we will test the Floquet algorithms 
-
 import numpy as np
 from assimulo.problem import Explicit_Problem
 
 #mod = Explicit_Problem(rhs, y0, t0)
-a=1
-k=2
-r=5
-p=0
 
-def exponential(t,y):
+
+def exponential(t,y,param=5):
+    r = param
     return (r*y)
 
 def sinusoidal(t,y):
-    R= [y[1], -y[0]]
+    R = [y[1], -y[0]]
     return R
 
 #Harvesting constant p
-def logistic(t,y):
+def logistic(t,y,param=(1,2,0)):
+  (a,k,p) = param
   return a*y*(1-y/k)-p
 
 
-def lotka_volterra(t,y):
-  a,b,c,d = 3,9,15,15
+def lotka_volterra(t,y,param=(3,9,15,15)):
+  (a,b,c,d) = param
   R=[a*y[0]-b*y[0]*y[1],c*y[0]*y[1]-d*y[1]]
   return R 
 
-def van_der_pol(t,y):
-  e=0.1
+def van_der_pol(t,y,param=0.1):
+  e=param
   R=[y[1],e*(1-y[0]**2)*y[1]-y[0]]
   return R
 
