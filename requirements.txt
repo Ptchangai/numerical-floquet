@@ -1,0 +1,7 @@
+--extra-index-url https://conda.binstar.org/chria
+numpy
+assimulo
+simpy
+tensorflow
+keras-tuner
+scipy
