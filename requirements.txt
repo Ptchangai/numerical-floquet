@@ -5,3 +5,5 @@ simpy
 tensorflow
 keras-tuner
 scipy
+voila
+notebook
