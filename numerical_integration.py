@@ -5,21 +5,31 @@ from scipy.integrate import solve_ivp
 from assimulo.solvers import RungeKutta34
 import numpy as np 
 
-def RK4step(f,uold, told, h):
+def RK4step(f,uold, told, h, param=None):
   """Runge kutta 4, single step"""
   uold = np.array(uold)
   unew = []
   for i in range(0,len(uold)):
-    yp1 = f(told, uold)[i]
-    yp2 = f(told + h/2, uold + h*yp1/2)[i]
-    yp3 = f(told + h/2, uold + h*yp2/2)[i]
-    yp4 = f(told + h, uold + h*yp3)[i]
+    yp1 = f(told, uold, param)[i]
+    yp2 = f(told + h/2, uold + h*yp1/2, param)[i]
+    yp3 = f(told + h/2, uold + h*yp2/2, param)[i]
+    yp4 = f(told + h, uold + h*yp3, param)[i]
     unew.append(uold[i] + h*(yp1 + 2*yp2 + 2*yp3 + yp4)/6)
   return unew
 
-def runge_kutta():
-    ...
-    return
+def solve_ode(initial_value, step_size, num_iterations, ode_func, param=None, stepper_func=RK4step):
+    t_values = np.arange(0, step_size*num_iterations, step_size)
+    u_values = [initial_value]
+    
+    u_current = initial_value
+    
+    for i in range(num_iterations):
+        u_new = stepper_func(ode_func, u_current, t_values[i], step_size, param)
+        u_values.append(u_new)
+        u_current = u_new
+        
+    return u_values
+
 
 def lagrange_polynomials(x,xm,i):
   """Computes Lagrange polynomial for interpolation"""
