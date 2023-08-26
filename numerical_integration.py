@@ -17,6 +17,30 @@ def RK4step(f,uold, told, h, param=None):
     unew.append(uold[i] + h*(yp1 + 2*yp2 + 2*yp3 + yp4)/6)
   return unew
 
+def RK34step(f,uold, told, h, param=None):
+  """Runge kutta 34, single step"""
+  uold = np.array(uold)
+  unew = []
+  for i in range(0,len(uold)):
+    yp1 = f(told, uold, param)[i]
+    yp2 = f(told + h/2, uold + h*yp1/2, param)[i]
+    yp3 = f(told + h/2, uold + h*yp2/2, param)[i]
+    zp3 = f(told + h/2, uold - h*yp1 + 2*h*yp2)
+    yp4 = f(told + h, uold + h*yp3, param)[i]
+    error_estimate = h*(2*yp2+zp3-2*yp3-yp4)/6
+    error = np.max(error_estimate)
+    unew.append(uold[i] + h*(yp1 + 2*yp2 + 2*yp3 + yp4)/6)
+  return unew, error
+
+def newstep(tol, error, errold, hold, k):
+    err = np.max(error)
+    errold = np.max(errold)
+    r = np.linalg.norm(err)
+    rold = np.linalg.norm(errold)
+    hnew = (tol/r)^(2/(3*k))*(tol/rold)^(-1/(3*k))*hold
+    return hnew
+
+
 def solve_ode(initial_value, step_size, num_iterations, ode_func, param=None, stepper_func=RK4step):
     t_values = np.arange(0, step_size*num_iterations, step_size)
     u_values = [initial_value]
