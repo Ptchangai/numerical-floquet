@@ -20,14 +20,11 @@ def RK4step(f,uold, told, h, param=None):
 def solve_ode(initial_value, step_size, num_iterations, ode_func, param=None, stepper_func=RK4step):
     t_values = np.arange(0, step_size*num_iterations, step_size)
     u_values = [initial_value]
-    
     u_current = initial_value
-    
     for i in range(num_iterations):
         u_new = stepper_func(ode_func, u_current, t_values[i], step_size, param)
         u_values.append(u_new)
         u_current = u_new
-        
     return u_values
 
 

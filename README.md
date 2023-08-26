@@ -1,5 +1,10 @@
-# numerical-floquet
-Stability analysis of limit cycles with Poincaré theory.
+# Numerical Floquet: algorithms for stability analysis of limit cycles with Poincaré theory.
+
+
+====================
+
+
+## Contents
 
 * RungeKutta
 * Shooting methods
@@ -8,7 +13,9 @@ Stability analysis of limit cycles with Poincaré theory.
 * Visualisation
 
 
-Set up: before runnning tthe scripts, you can run:
+## Setup
+
+Before runnning tthe scripts, you can run:
 
 * pip install -r requirements.txt
 
