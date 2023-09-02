@@ -32,12 +32,12 @@ def RK34step(f,uold, told, h, param=None):
     unew.append(uold[i] + h*(yp1 + 2*yp2 + 2*yp3 + yp4)/6)
   return unew, error
 
-def newstep(tol, error, errold, hold, k):
-    err = np.max(error)
-    errold = np.max(errold)
-    r = np.linalg.norm(err)
-    rold = np.linalg.norm(errold)
-    hnew = (tol/r)^(2/(3*k))*(tol/rold)^(-1/(3*k))*hold
+def newstep(tol, error, erro_old, h_old, k):
+    m_error = np.max(error)
+    m_error_old = np.max(m_error_old)
+    r = np.linalg.norm(m_error)
+    r_old = np.linalg.norm(m_error_old)
+    hnew = (tol/r)^(2/(3*k))*(tol/r_old)^(-1/(3*k))*h_old
     return hnew
 
 
@@ -55,11 +55,11 @@ def solve_ode(initial_value, step_size, num_iterations, ode_func, param=None, st
 def lagrange_polynomials(x,xm,i):
   """Computes Lagrange polynomial for interpolation"""
   n = len(xm)
-  Li = 1
+  product = 1
   for j in range(n):
     if i != j:
-       Li *= (x-xm[j])/(xm[i]-xm[j])
-  return Li
+       product *= (x-xm[j])/(xm[i]-xm[j])
+  return product
 
 #Define interplation algorithm
 def interpolation(x,xm,ym):
@@ -71,6 +71,32 @@ def interpolation(x,xm,ym):
 def collocation_methods():
     ...
     return
+
+def collocation_solve(F, y0, t_span, num_collocation_points):
+    t_start, t_end = t_span
+    t_collocation = np.linspace(t_start, t_end, num_collocation_points)
+    num_dimensions = len(y0)
+    y_collocation = np.zeros((num_collocation_points, num_dimensions))
+    
+    # Initial guess for the y values at collocation points
+    y_guess = np.outer(np.ones(num_collocation_points), y0)
+    
+    def residual(y_colloc_flat):
+        y_colloc = y_colloc_flat.reshape(num_collocation_points, num_dimensions)
+        residuals = []
+        for i in range(num_collocation_points):
+            residual_i = np.zeros(num_dimensions)
+            for j in range(num_dimensions):
+                y_interp = interpolation(t_collocation[i], t_collocation, y_colloc[:, j])
+                residual_i[j] = y_colloc[i, j] - y_interp
+            residuals.extend(residual_i)
+        return residuals
+    
+    y_colloc_flat = fsolve(residual, y_guess.flatten())
+    y_collocation = y_colloc_flat.reshape(num_collocation_points, num_dimensions)
+    
+    return t_collocation, y_collocation
+
 
 def shooting_methods():
     v0, = fsolve(objective_shooting, v0)
