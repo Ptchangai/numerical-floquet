@@ -38,7 +38,7 @@ def sincos(t,y):
 
 #Planetary movement
 #y: [vx0, vy0, Px0, Py0]
-def planets(t,y, param):
+def two_planets(t,y, param):
 
   G = param['gravitational_constant']
   mass = param['mass']
@@ -54,3 +54,24 @@ def planets(t,y, param):
   R1 = [y[3], y[4], y[5], S1[0], S1[1], S1[2]] #for the first body
   R2 = [y[9], y[10], y[11], S2[0], S2[1], S2[2]] #for the second body
   return R1 + R2
+
+def n_bodies(t, y, param):
+    
+    G = param['gravitational_constant']
+    mass = param['mass']
+    num_bodies = param['num_bodies']
+    dimensions = param['dimensions']
+    positions = y[:num_bodies*dimensions]
+    velocities = y[num_bodies*dimensions:]
+
+    accelerations = np.zeros_like(positions)
+    for i in range(num_bodies):
+        for j in range(num_bodies):
+            if i != j:
+                rel_pos = positions[i*dimensions:(i+1)*dimensions] - positions[j*dimensions:(j+1)*dimensions]
+                distance = np.linalg.norm(rel_pos)
+                force = -G * mass[i] * mass[j] * rel_pos / (distance ** 3)
+                accelerations[i*dimensions:(i+1)*dimensions] += force
+
+    dydt = np.concatenate((velocities, accelerations))
+    return dydt
