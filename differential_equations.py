@@ -36,19 +36,21 @@ def sincos(t,y):
 
 
 
-#Planetary movement?
+#Planetary movement
 #y: [vx0, vy0, Px0, Py0]
-def planets(t,y):
-  G = 6.67*10**(-11)
-  G = 6.67*10**(-2)
-  Ms = 1.98854*10**30
-  Ms = 1.98854*10**3
-  #Ps=[1.81899*10**8,9.83630*10**8,-1.5877*10**7]
-  Ps = [0,0,0]
-  d = np.sqrt((y[0]-Ps[0])**2+(y[1]-Ps[1])**2+(y[2]-Ps[2])**2)
-  S = [0,0,0]
-  S[0] = G*Ms*(Ps[0]-y[0])/d**3
-  S[1] = G*Ms*(Ps[1]-y[1])/d**3
-  S[2] = G*Ms*(Ps[2]-y[2])/d**3
-  R = [y[3],y[4],y[5],S[0],S[1],S[2]]
-  return R 
+def planets(t,y, param):
+
+  G = param['gravitational_constant']
+  mass = param['mass']
+  y1_pos = y[:3]  # Position of the first body
+  y2_pos = y[6:9] # Position of the second body
+
+  d = np.sqrt(np.sum((y1_pos - y2_pos)**2))   # distance between the first body and the second body
+  gravitational_force = G * (y2_pos - y1_pos) / d**3 # gravitational force acting on the first body due to the second body
+  S1 = mass[1] * gravitational_force
+  S2 = -mass[0] * gravitational_force #opposite direction of forces. 
+
+  #Equation of motions give:
+  R1 = [y[3], y[4], y[5], S1[0], S1[1], S1[2]] #for the first body
+  R2 = [y[9], y[10], y[11], S2[0], S2[1], S2[2]] #for the second body
+  return R1 + R2
