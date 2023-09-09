@@ -6,7 +6,7 @@ from assimulo.solvers import RungeKutta34
 import numpy as np 
 
 
-def Eulerstep(f,uold, told, h, param=None):
+def euler_step(f,uold, told, h, param=None):
   """Euler method time stepper for solving ordinary differential equations"""
   uold = np.array(uold)
   unew = []
@@ -17,27 +17,25 @@ def RK4step(f,uold, told, h, param=None):
   """Runge kutta 4, single step"""
   uold = np.array(uold)
   unew = []
-  for i in range(0,len(uold)):
-    yp1 = f(told, uold, param)[i]
-    yp2 = f(told + h/2, uold + h*yp1/2, param)[i]
-    yp3 = f(told + h/2, uold + h*yp2/2, param)[i]
-    yp4 = f(told + h, uold + h*yp3, param)[i]
-    unew.append(uold[i] + h*(yp1 + 2*yp2 + 2*yp3 + yp4)/6)
+  yp1 = np.array(f(told, uold, param))
+  yp2 = np.array(f(told + h/2, uold + h*yp1/2, param))
+  yp3 = np.array(f(told + h/2, uold + h*yp2/2, param))
+  yp4 = np.array(f(told + h, uold + h*yp3, param))
+  unew = uold + h*(yp1 + 2*yp2 + 2*yp3 + yp4)/6
   return unew
 
 def RK34step(f,uold, told, h, param=None):
   """Runge kutta 34, single step"""
   uold = np.array(uold)
   unew = []
-  for i in range(0,len(uold)):
-    yp1 = f(told, uold, param)[i]
-    yp2 = f(told + h/2, uold + h*yp1/2, param)[i]
-    yp3 = f(told + h/2, uold + h*yp2/2, param)[i]
-    zp3 = f(told + h/2, uold - h*yp1 + 2*h*yp2)
-    yp4 = f(told + h, uold + h*yp3, param)[i]
-    error_estimate = h*(2*yp2+zp3-2*yp3-yp4)/6
-    error = np.max(error_estimate)
-    unew.append(uold[i] + h*(yp1 + 2*yp2 + 2*yp3 + yp4)/6)
+  yp1 = np.array(f(told, uold, param))
+  yp2 = np.array(f(told + h/2, uold + h*yp1/2, param))
+  yp3 = np.array(f(told + h/2, uold + h*yp2/2, param))
+  zp3 = np.array(f(told + h/2, uold - h*yp1 + 2*h*yp2))
+  yp4 = np.array(f(told + h, uold + h*yp3, param))
+  error_estimate = h*(2*yp2+zp3-2*yp3-yp4)/6
+  error = np.max(error_estimate)
+  unew = uold + h*(yp1 + 2*yp2 + 2*yp3 + yp4)/6
   return unew, error
 
 def newstep(tol, error, erro_old, h_old, k):
@@ -65,7 +63,7 @@ def solve_ode_adapt(initial_value, step_size, num_iterations, ode_func, param=No
     u_current = initial_value
     for i in range(num_iterations):
         u_new, error = stepper_func(ode_func, u_current, t_values[i], step_size, param)
-        h = newstep(tol, error, erro_old, h_old, k):
+        h = newstep(tol, error, erro_old, h_old, k)
         u_values.append(u_new)
         u_current = u_new
     return u_values
