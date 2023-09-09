@@ -5,6 +5,14 @@ from scipy.integrate import solve_ivp
 from assimulo.solvers import RungeKutta34
 import numpy as np 
 
+
+def Eulerstep(f,uold, told, h, param=None):
+  """Euler method time stepper for solving ordinary differential equations"""
+  uold = np.array(uold)
+  unew = []
+  unew = uold + h * f(told, uold, param)
+  return unew
+
 def RK4step(f,uold, told, h, param=None):
   """Runge kutta 4, single step"""
   uold = np.array(uold)
@@ -51,6 +59,16 @@ def solve_ode(initial_value, step_size, num_iterations, ode_func, param=None, st
         u_current = u_new
     return u_values
 
+def solve_ode_adapt(initial_value, step_size, num_iterations, ode_func, param=None, stepper_func=RK34step):
+    t_values = np.arange(0, step_size*num_iterations, step_size)
+    u_values = [initial_value]
+    u_current = initial_value
+    for i in range(num_iterations):
+        u_new, error = stepper_func(ode_func, u_current, t_values[i], step_size, param)
+        h = newstep(tol, error, erro_old, h_old, k):
+        u_values.append(u_new)
+        u_current = u_new
+    return u_values
 
 def lagrange_polynomials(x,xm,i):
   """Computes Lagrange polynomial for interpolation"""

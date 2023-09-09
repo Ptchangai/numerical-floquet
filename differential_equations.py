@@ -55,6 +55,7 @@ def two_planets(t,y, param):
   R2 = [y[9], y[10], y[11], S2[0], S2[1], S2[2]] #for the second body
   return R1 + R2
 
+
 def n_bodies(t, y, param):
     
     G = param['gravitational_constant']
