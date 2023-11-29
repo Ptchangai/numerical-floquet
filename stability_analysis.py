@@ -1,5 +1,9 @@
 import numpy as np
 
+def geometric_poincare():
+    ...
+    return
+
 def jacobian_matrix(func, x, params):
     """Computes the Jacobian of function func at point x"""
     epsilon = 1e-6

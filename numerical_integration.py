@@ -39,6 +39,7 @@ def RK34step(f,uold, told, h, param=None):
   return unew, error
 
 def newstep(tol, error, erro_old, h_old, k):
+    """Computes new step size hnew based on estimation error"""
     m_error = np.max(error)
     m_error_old = np.max(m_error_old)
     r = np.linalg.norm(m_error)
@@ -48,6 +49,7 @@ def newstep(tol, error, erro_old, h_old, k):
 
 
 def solve_ode(initial_value, step_size, num_iterations, ode_func, param=None, stepper_func=RK4step):
+    """Integrates given function ode_func taking num_iteration steps, using stepper_func estimation method."""
     t_values = np.arange(0, step_size*num_iterations, step_size)
     u_values = [initial_value]
     u_current = initial_value
@@ -58,6 +60,7 @@ def solve_ode(initial_value, step_size, num_iterations, ode_func, param=None, st
     return u_values
 
 def solve_ode_adapt(initial_value, step_size, num_iterations, ode_func, param=None, stepper_func=RK34step):
+    "As solve_ode, with adaptive step size"
     t_values = np.arange(0, step_size*num_iterations, step_size)
     u_values = [initial_value]
     u_current = initial_value
@@ -77,8 +80,8 @@ def lagrange_polynomials(x,xm,i):
        product *= (x-xm[j])/(xm[i]-xm[j])
   return product
 
-#Define interplation algorithm
 def interpolation(x,xm,ym):
+  """Interpolates value x for a given set of points (xm, ym)"""
   Poly = 0
   for i in range(len(xm)):
     Poly += ym[i]*lagrange_polynomials(x,xm,i)
@@ -89,6 +92,7 @@ def collocation_methods():
     return
 
 def collocation_solve(F, y0, t_span, num_collocation_points):
+    """Integrates function F with initial value y0, over t_span."""
     t_start, t_end = t_span
     t_collocation = np.linspace(t_start, t_end, num_collocation_points)
     num_dimensions = len(y0)
@@ -115,10 +119,12 @@ def collocation_solve(F, y0, t_span, num_collocation_points):
 
 
 def shooting_methods():
+    """Find the initial velocity that satisfies objective function"""
     v0, = fsolve(objective_shooting, v0)
     return v0
 
 def objective_shooting(v0, func):
+    """Objective function used in shooting method."""
     sol = solve_ivp(func, [t0, t1], \
             [y0, v0], t_eval = t_eval)
     y = sol.y[0]
