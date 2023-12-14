@@ -42,7 +42,7 @@ def tune_build_model(hp):
     return model
 
 def tune_model(model,model_name='Model', max_trials=10):
-    """Finds best hyperparameters for model architecture"""
+    """Find best hyperparameters for model architecture"""
     tuner = RandomSearch(build_model,
                          objective='mean_squared_error',
                          max_trials=max_trials,
@@ -51,7 +51,7 @@ def tune_model(model,model_name='Model', max_trials=10):
                          project_name='Neural_Floquet')
     
 def train_model(model,Xdf,Ydf, epochs=100, batch_size=70, validation_split=0.1,shuffle=True):
-    """Trains new model given a training dataset (Xdf, Ydf) and model architecture."""
+    """Train new model given a training dataset (Xdf, Ydf) and model architecture."""
     model = build_model()
     history = model.fit(Xdf, 
                         Ydf, 
@@ -65,7 +65,7 @@ def train_model(model,Xdf,Ydf, epochs=100, batch_size=70, validation_split=0.1,s
     return
 
 def create_dataset(ODE, length, t0, N, parameters):
-    """Generates training dataset with random values, integrating given ODE using odeint"""
+    """Generate training dataset with random values, integrating given ODE using odeint"""
     dataset = []
     for i in range(0,length):
             y0 = [random.uniform(0, 20), random.uniform(0, 20)] #(Initial conditions)

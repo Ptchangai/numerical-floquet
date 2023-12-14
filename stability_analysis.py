@@ -5,7 +5,7 @@ def geometric_poincare():
     return
 
 def jacobian_matrix(func, x, params):
-    """Computes the Jacobian of function func at point x"""
+    """Compute the Jacobian of function func at point x"""
     epsilon = 1e-6
     n = len(x)
     J = np.zeros((n, n))
@@ -19,7 +19,7 @@ def jacobian_matrix(func, x, params):
 
 
 def power_iteration(A,n=50):
-    """Computes the largest eigenvalue of the matrix A"""
+    """Compute the largest eigenvalue of the matrix A"""
     e = lambda x: x.T@A@x
     la, _ = np.linalg.eig(A)
     lmax = max(abs(la))

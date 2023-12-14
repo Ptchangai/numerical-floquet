@@ -39,7 +39,7 @@ def RK34step(f,uold, told, h, param=None):
   return unew, error
 
 def newstep(tol, error, erro_old, h_old, k):
-    """Computes new step size hnew based on estimation error"""
+    """Compute new step size hnew based on estimation error"""
     m_error = np.max(error)
     m_error_old = np.max(m_error_old)
     r = np.linalg.norm(m_error)
@@ -49,7 +49,7 @@ def newstep(tol, error, erro_old, h_old, k):
 
 
 def solve_ode(initial_value, step_size, num_iterations, ode_func, param=None, stepper_func=RK4step):
-    """Integrates given function ode_func taking num_iteration steps, using stepper_func estimation method."""
+    """Integrate given function ode_func taking num_iteration steps, using stepper_func estimation method."""
     t_values = np.arange(0, step_size*num_iterations, step_size)
     u_values = [initial_value]
     u_current = initial_value
@@ -72,7 +72,7 @@ def solve_ode_adapt(initial_value, step_size, num_iterations, ode_func, param=No
     return u_values
 
 def lagrange_polynomials(x,xm,i):
-  """Computes Lagrange polynomial for interpolation"""
+  """Compute Lagrange polynomial for interpolation"""
   n = len(xm)
   product = 1
   for j in range(n):
@@ -81,7 +81,7 @@ def lagrange_polynomials(x,xm,i):
   return product
 
 def interpolation(x,xm,ym):
-  """Interpolates value x for a given set of points (xm, ym)"""
+  """Interpolate value x for a given set of points (xm, ym)"""
   Poly = 0
   for i in range(len(xm)):
     Poly += ym[i]*lagrange_polynomials(x,xm,i)
@@ -92,7 +92,7 @@ def collocation_methods():
     return
 
 def collocation_solve(F, y0, t_span, num_collocation_points):
-    """Integrates function F with initial value y0, over t_span."""
+    """Integrate function F with initial value y0, over t_span."""
     t_start, t_end = t_span
     t_collocation = np.linspace(t_start, t_end, num_collocation_points)
     num_dimensions = len(y0)
