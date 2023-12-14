@@ -81,6 +81,14 @@ def create_dataset(ODE, length, t0, N, parameters):
     Ydf = df.iloc[:, 4:]
     return [Xdf, Ydf]
 
+def normalize_data(data_values):
+     "Normalize numpy array data_values"
+     mean = data_values.mean(axis=0)
+     data_values -= mean
+     std = data_values.std(axis=0) 
+     data_values /= std
+     return data_values
+
 def test_model():
     ...
     return
