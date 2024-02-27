@@ -19,7 +19,6 @@ Before running the scripts, you can install the necessary Python packages by cal
 
 ```
 pip install -r requirements.txt
-
 ```
 
 
@@ -34,18 +33,16 @@ conda install -c conda-forge assimulo
 Finally, you can then run the command:
 
 ```
-
 conda jupyter notebook presentation.ipynb
-
 ```
 
-This should open the jupyter notebook file in a browser. You can run through the steps contained in this page. 
+This should open the jupyter notebook file in a browser. You can follow the steps contained in the jupyter notebook. 
 
 ## .py file description
 
 * The ODEs are defined in the file 'differential_equations.py'.
 * The numerical methods for solving such ODEs are defined in 'numerical_integration.py'.
 * The deep learning methods for replicating the numerical methods are defined in 'neural_floquet.py'.
-* The numerical methods for stability analysis are dfined in 'stability_analysis.py'.
+* The numerical methods for stability analysis are defined in 'stability_analysis.py'.
 * Speed and accuracy comparison functions can be found in file 'benchmarking.py'.
 
