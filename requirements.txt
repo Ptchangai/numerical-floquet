@@ -7,3 +7,4 @@ keras-tuner
 scipy
 voila
 notebook
+matplotlib
