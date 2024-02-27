@@ -21,17 +21,17 @@ def logistic(t,y,param=(1,2,0)):
 
 def lotka_volterra(t,y,param=(3,9,15,15)):
   (a,b,c,d) = param
-  R=[a*y[0]-b*y[0]*y[1],c*y[0]*y[1]-d*y[1]]
+  R = [a*y[0]-b*y[0]*y[1], c*y[0]*y[1]-d*y[1]]
   return R 
 
 def van_der_pol(t,y,param=0.1):
-  e=param
-  R=[y[1],e*(1-y[0]**2)*y[1]-y[0]]
+  e = param
+  R = [y[1], e*(1-y[0]**2)*y[1]-y[0]]
   return R
 
 #Define the functions
 def sincos(t,y):
-  R=[-np.sin(y[1]),np.cos(y[0])]
+  R = [-np.sin(y[1]), np.cos(y[0])]
   return R
 
 
