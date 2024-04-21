@@ -65,7 +65,7 @@ def two_planets(t, y, param):
   R2 = [y[9], y[10], y[11], S2[0], S2[1], S2[2]] #for the second body
   return R1 + R2
 
-
+#TODO: Actually it is not as described in documentation, rather velocities and acceleration are treated separately.
 def n_bodies(t, y, param):
       speed_x_a2, speed_y_a2, speed_z_a2, position_x_a2, position_y_a2, position_z_a2,
        ... ] 

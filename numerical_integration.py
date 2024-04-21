@@ -69,6 +69,7 @@ def solve_ode(initial_value, step_size, num_iterations, ode_func, param=None, st
         u_current = u_new
     return u_values
 
+#TODO: define tol, erro_old h_old, k
 def solve_ode_adapt(initial_value, step_size, num_iterations, ode_func, param=None, stepper_func=RK34step):
     """
     As solve_ode, with adaptive step size.
@@ -102,6 +103,7 @@ def interpolation(x,xm,ym):
     Poly += ym[i]*lagrange_polynomials(x,xm,i)
   return Poly
 
+#TODO: write collocation methods. 
 def collocation_methods():
     ...
     return
@@ -134,7 +136,7 @@ def collocation_solve(F, y0, t_span, num_collocation_points):
     
     return t_collocation, y_collocation
 
-
+#TODO: generalise to other funcions, other initial values and velocity...
 def shooting_methods():
     """
     Find the initial velocity that satisfies objective function.

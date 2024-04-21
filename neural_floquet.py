@@ -12,9 +12,15 @@ from tensorflow.keras import layers
 from kerastuner import HyperParameters
 from kerastuner.tuners import RandomSearch
 import random
-from scipy.integrate import odeint #Replace by Assimulo integrator
-#Todo: use numba
+#TODO: remplace scipy.integrate with by Assimulo integrator
+#TODO: use numba
 
+#TODO: add complete class for wider range of models.
+class ModelDefinition():
+     ...
+
+#TODO: make architecture more flexible(parameters...) 
+def build_model(input_size, output_size=2):
     """
     Create Sequential architecture for our Neural Network ODE solver.
     """
@@ -43,6 +49,7 @@ def tune_build_model(hp):
                   metrics=['mean_absolute_error'])
     return model
 
+def tune_model(model, model_name='Model', max_trials=10):
     """
     Find best hyperparameters for model architecture.
     """
@@ -53,6 +60,7 @@ def tune_build_model(hp):
                          directory='Tuning_'+model_name,
                          project_name='Neural_Floquet')
     
+def train_model(model, Xdf, Ydf, epochs=100, batch_size=70, validation_split=0.1, shuffle=True):
     """
     Train new model given a training dataset (Xdf, Ydf) and model architecture.
     """
@@ -65,8 +73,13 @@ def tune_build_model(hp):
     plt.plot(history.history['loss'], label='train')
     plt.plot(history.history['val_loss'], label='test')
     plt.legend()
-    return
+    return model
 
+##TODO: refactor.
+##TODO: pandas is not needed and might slow the program down. Remove it (can be use for other things)
+#TODO: Adapt y0 to any size
+#TODO: keep h constant?
+#TODO: make time series rather than collection of random single steps. This way we can use it for LSTM.
 def create_dataset(ODE, length, t0, N, parameters):
     """
     Generate training dataset with random values, integrating given ODE using odeint.
@@ -86,6 +99,7 @@ def create_dataset(ODE, length, t0, N, parameters):
     Ydf = df.iloc[:, 4:]
     return [Xdf, Ydf]
 
+##TODO: if the mean and values are provided, use them. Otherwise make them up.
 def normalize_data(data_values):
      """
      Normalize numpy array data_values.

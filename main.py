@@ -21,7 +21,10 @@ def test_LV():
     plt.plot(lotka1,volterra1)
     lotka2 = [i[0] for i in result2]
     volterra2 = [i[1] for i in result2]
-    plt.plot(lotka2,volterra2)
+
+#TODO: complete last lines of test_planet to fetch and plot results.
+#TODO: Find initial values and parameter values that actually work.
+#TODO: Add benchmark comparison to tests
 def test_planets():
     """
     Run basic test for N_boody ODE with solvers.
@@ -32,5 +35,5 @@ def main():
     print("Lotka Volterra test passed")
     return
 
-main()
-
+##TODO: it would be interesting if this section actually showed examples of bifurcations, etc..
+if __name__ == "main":

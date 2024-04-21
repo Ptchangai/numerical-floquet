@@ -1,5 +1,6 @@
 import numpy as np
 
+#TODO
 def geometric_poincare():
     """
     For a 2D ODE, approximate the first return time using some section of the orbit.
@@ -23,6 +24,7 @@ def jacobian_matrix(func, x, params):
     return J
 
 
+def power_iteration(A, n=50):
     """
     Compute the largest eigenvalue of the matrix A.
     """
@@ -37,10 +39,12 @@ def jacobian_matrix(func, x, params):
     error = abs(l-lmax)
     return l, error
 
+#TODO
 def monodromy_matrix(diff_eq_func, jacobian_func, t):
     ...
     return
 
+#TODO
 def monodromy_matrix_shooting(diff_eq_func, jacobian_func, t):
     """
     Alternative method to compute the Monodromy matrix using shooting methods.
