@@ -28,6 +28,14 @@ def lotka_volterra(t, y, param=(3,9,15,15)):
   R = [a*y[0]-b*y[0]*y[1], c*y[0]*y[1]-d*y[1]]
   return R 
 
+def N_lotka_volterra(t, y, param):
+  num_species = len(y)
+  params = np.array(param).reshape((num_species, num_species))
+  R = y
+  for i in range(num_species):
+      R[i] += np.sum(y * params[:, i])
+  return R
+
 def van_der_pol(t, y, param=0.1):
   """
   Describes a Van der Pol oscillator.
