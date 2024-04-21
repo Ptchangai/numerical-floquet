@@ -12,6 +12,7 @@ from tensorflow.keras import layers
 from kerastuner import HyperParameters
 from kerastuner.tuners import RandomSearch
 import random
+from scipy.integrate import odeint 
 #TODO: remplace scipy.integrate with by Assimulo integrator
 #TODO: use numba
 
@@ -25,12 +26,15 @@ def build_model(input_size, output_size=2):
     Create Sequential architecture for our Neural Network ODE solver.
     """
     model = keras.Sequential([
-    keras.layers.InputLayer(input_shape=(3,)), 
+    keras.layers.InputLayer(input_shape=(None, input_size)), 
+    keras.layers.GRU(32, dropout=0.2, recurrent_dropout=0.2, return_sequences = True),
+    keras.layers.GRU(64, dropout=0.2, recurrent_dropout=0.2),
     keras.layers.Dense(32, activation='sigmoid'),
     keras.layers.Dense(32, activation='relu'),
     keras.layers.Dense(8, activation='sigmoid'),
     keras.layers.Dense(output_size)
-])
+    ])
+    
     model.compile(metrics='mean_absolute_error', loss='mean_squared_error' )
     model.summary()
     return model
@@ -64,12 +68,14 @@ def train_model(model, Xdf, Ydf, epochs=100, batch_size=70, validation_split=0.1
     """
     Train new model given a training dataset (Xdf, Ydf) and model architecture.
     """
+
     history = model.fit(Xdf, 
                         Ydf, 
                         epochs=epochs,
                         batch_size=batch_size,
                         validation_split=validation_split,
                         shuffle=shuffle)
+
     plt.plot(history.history['loss'], label='train')
     plt.plot(history.history['val_loss'], label='test')
     plt.legend()
@@ -108,7 +114,7 @@ def normalize_data(data_values):
      data_values -= mean
      std = data_values.std(axis=0) 
      data_values /= std
-     return data_values
+     return data_values, mean, std
 
 def test_model():
     """
@@ -116,6 +122,7 @@ def test_model():
     """
     ...
     return
+
 
 if __name__ == "main":
 
