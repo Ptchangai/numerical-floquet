@@ -99,9 +99,10 @@ def interpolation(x,xm,ym):
   """
   Interpolate value x for a given set of points (xm, ym).
   """
+  polynomial = 0
   for i in range(len(xm)):
-    Poly += ym[i]*lagrange_polynomials(x,xm,i)
-  return Poly
+    polynomial += ym[i]*lagrange_polynomials(x,xm,i)
+  return polynomial
 
 #TODO: write collocation methods. 
 def collocation_methods():
@@ -144,6 +145,7 @@ def shooting_methods():
     v0, = fsolve(objective_shooting, v0)
     return v0
 
+def objective_shooting(v0, func, t0, t1, y0, t_eval):
     """
     Objective function used in shooting method.
     """

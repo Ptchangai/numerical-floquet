@@ -93,7 +93,7 @@ def create_dataset(ODE, length, t0, N, parameters):
             sol = odeint(ODE, y0, t, args=parameters)
             sol_x1, sol_x2 = sol.T
             if np.abs(sol_x2[-1]) < 100 or np.abs(sol_x1[-1]) < 100:
-                dataset.append([y0[0],y0[1],h,ti,sol_x1[-1],sol_x2[-1]])
+                dataset.append([y0[0], y0[1], h, ti, sol_x1[-1], sol_x2[-1]])
     df = pd.DataFrame(dataset,columns=['X0','Y0','dt','t','X','Y'])
     Xdf = df.iloc[:, 0:4]
     Ydf = df.iloc[:, 4:]
