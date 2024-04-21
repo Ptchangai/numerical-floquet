@@ -1,11 +1,16 @@
 import numpy as np
 
 def geometric_poincare():
+    """
+    For a 2D ODE, approximate the first return time using some section of the orbit.
+    """
     ...
     return
 
 def jacobian_matrix(func, x, params):
-    """Compute the Jacobian of function func at point x"""
+    """
+    Compute the Jacobian of function func at point x.
+    """
     epsilon = 1e-6
     n = len(x)
     J = np.zeros((n, n))
@@ -18,8 +23,9 @@ def jacobian_matrix(func, x, params):
     return J
 
 
-def power_iteration(A,n=50):
-    """Compute the largest eigenvalue of the matrix A"""
+    """
+    Compute the largest eigenvalue of the matrix A.
+    """
     e = lambda x: x.T@A@x
     la, _ = np.linalg.eig(A)
     lmax = max(abs(la))
@@ -36,6 +42,8 @@ def monodromy_matrix(diff_eq_func, jacobian_func, t):
     return
 
 def monodromy_matrix_shooting(diff_eq_func, jacobian_func, t):
-    """Alternative method to compute the Monodromy matrix using shooting methods"""
+    """
+    Alternative method to compute the Monodromy matrix using shooting methods.
+    """
     ...
     return

@@ -23,6 +23,9 @@ def test_LV():
     volterra2 = [i[1] for i in result2]
     plt.plot(lotka2,volterra2)
 def test_planets():
+    """
+    Run basic test for N_boody ODE with solvers.
+    """
     return
 def main():
     test_LV()

@@ -4,8 +4,10 @@ from assimulo.problem import Explicit_Problem
 
 #mod = Explicit_Problem(rhs, y0, t0)
 
-
-def exponential(t,y,param=5):
+def exponential(t, y, param=5):
+    """
+    Describes y = r*e^x.
+    """
     r = param
     return (r*y)
 
@@ -14,7 +16,10 @@ def sinusoidal(t,y):
     return R
 
 #Harvesting constant p
-def logistic(t,y,param=(1,2,0)):
+def logistic(t, y, param=(1,2,0)):
+  """
+  Logistic growth with harvesting constant p.
+  """
   (a,k,p) = param
   return a*y*(1-y/k)-p
 
@@ -24,7 +29,10 @@ def lotka_volterra(t,y,param=(3,9,15,15)):
   R = [a*y[0]-b*y[0]*y[1], c*y[0]*y[1]-d*y[1]]
   return R 
 
-def van_der_pol(t,y,param=0.1):
+def van_der_pol(t, y, param=0.1):
+  """
+  Describes a Van der Pol oscillator.
+  """
   e = param
   R = [y[1], e*(1-y[0]**2)*y[1]-y[0]]
   return R
@@ -35,11 +43,13 @@ def sincos(t,y):
   return R
 
 
-
-#Planetary movement
-#y: [vx0, vy0, Px0, Py0]
-def two_planets(t,y, param):
-
+def two_planets(t, y, param):
+  """
+  Planetary movement with two bodies a and b.
+  y: [speed_x_a, speed_y_a, speed_z_a, position_x_a, position_y_a, position_z_a, 
+      speed_x_b, speed_y_b, speed_z_b, position_x_b, position_y_b, position_z_b ] 
+  params: dictionary with values for gravitational constant and mass.   
+  """
   G = param['gravitational_constant']
   mass = param['mass']
   y1_pos = y[:3]  # Position of the first body
@@ -57,7 +67,10 @@ def two_planets(t,y, param):
 
 
 def n_bodies(t, y, param):
-    
+      speed_x_a2, speed_y_a2, speed_z_a2, position_x_a2, position_y_a2, position_z_a2,
+       ... ] 
+    params: dictionary with values for gravitational constant and mass.   
+    """
     G = param['gravitational_constant']
     mass = param['mass']
     num_bodies = param['num_bodies']

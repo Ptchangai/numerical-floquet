@@ -1,8 +1,10 @@
 #This script will be used to compare algorithms: Speed, accuracy, stability
 import time
 
-def compute_execution_time(function):
-    """Computes the time it takes to run function()"""
+def compute_execution_time(method, function, param):
+    """
+    Compute the time it takes to run function()
+    """
     start_time = time.time()
     function()  
     end_time = time.time()
@@ -10,12 +12,16 @@ def compute_execution_time(function):
     print(f"Execution time: {execution_time} seconds")
     return
 
-#Measure accuracy
-def compute_accuracy(function):
+def compute_accuracy(method, function, param):
+    """
+    Measure accuracy of a numerical method for a given function
+    """
     ...
     return
 
-#Measure stability
-def compute_stability(function):
+def compute_stability(method, function, param):
+    """
+    Measure stability of a numerical method for a given function
+    """
     ...
     return

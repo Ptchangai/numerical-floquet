@@ -15,9 +15,9 @@ import random
 from scipy.integrate import odeint #Replace by Assimulo integrator
 #Todo: use numba
 
-#Todo: add possibility for more models
-def build_model(output_size=2):
-    """Create architecture for our Neural Network ODE solver"""
+    """
+    Create Sequential architecture for our Neural Network ODE solver.
+    """
     model = keras.Sequential([
     keras.layers.InputLayer(input_shape=(3,)), 
     keras.layers.Dense(32, activation='sigmoid'),
@@ -30,7 +30,9 @@ def build_model(output_size=2):
     return model
 
 def tune_build_model(hp):
-    """Build tuneable model"""
+    """
+    Build tuneable model.
+    """
     model = keras.Sequential()
     model.add(keras.layers.InputLayer(input_shape=(3,)))
     model.add(layers.Dense(units=hp.Int('units', min_value=8, max_value=64, step=8),
@@ -41,8 +43,9 @@ def tune_build_model(hp):
                   metrics=['mean_absolute_error'])
     return model
 
-def tune_model(model,model_name='Model', max_trials=10):
-    """Find best hyperparameters for model architecture"""
+    """
+    Find best hyperparameters for model architecture.
+    """
     tuner = RandomSearch(build_model,
                          objective='mean_squared_error',
                          max_trials=max_trials,
@@ -50,9 +53,9 @@ def tune_model(model,model_name='Model', max_trials=10):
                          directory='Tuning_'+model_name,
                          project_name='Neural_Floquet')
     
-def train_model(model,Xdf,Ydf, epochs=100, batch_size=70, validation_split=0.1,shuffle=True):
-    """Train new model given a training dataset (Xdf, Ydf) and model architecture."""
-    model = build_model()
+    """
+    Train new model given a training dataset (Xdf, Ydf) and model architecture.
+    """
     history = model.fit(Xdf, 
                         Ydf, 
                         epochs=epochs,
@@ -65,7 +68,9 @@ def train_model(model,Xdf,Ydf, epochs=100, batch_size=70, validation_split=0.1,s
     return
 
 def create_dataset(ODE, length, t0, N, parameters):
-    """Generate training dataset with random values, integrating given ODE using odeint"""
+    """
+    Generate training dataset with random values, integrating given ODE using odeint.
+    """
     dataset = []
     for i in range(0,length):
             y0 = [random.uniform(0, 20), random.uniform(0, 20)] #(Initial conditions)
@@ -82,7 +87,9 @@ def create_dataset(ODE, length, t0, N, parameters):
     return [Xdf, Ydf]
 
 def normalize_data(data_values):
-     "Normalize numpy array data_values"
+     """
+     Normalize numpy array data_values.
+     """
      mean = data_values.mean(axis=0)
      data_values -= mean
      std = data_values.std(axis=0) 
@@ -90,5 +97,8 @@ def normalize_data(data_values):
      return data_values
 
 def test_model():
+    """
+    Test model accuracy against numerical method accuracy.
+    """
     ...
     return
