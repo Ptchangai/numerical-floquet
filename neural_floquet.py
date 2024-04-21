@@ -116,3 +116,14 @@ def test_model():
     """
     ...
     return
+
+if __name__ == "main":
+
+    ODE, length, t0, N, parameters = ...
+
+    Xdf, Ydf = create_dataset(ODE, length, t0, N, parameters)
+    input_size = Xdf.shape[-1]
+    output_size = Ydf.shape[-1]
+
+    model = build_model(input_size, output_size )
+    model = train_model()

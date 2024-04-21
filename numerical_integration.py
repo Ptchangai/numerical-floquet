@@ -1,4 +1,4 @@
-#Define numemrical integration methods to solve differential equaions
+#Define numerical integration methods to solve differential equations
 #Use assimulo.
 from scipy.optimize import fsolve
 from scipy.integrate import solve_ivp
