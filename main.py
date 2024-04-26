@@ -49,5 +49,5 @@ def run_test():
     return
 
 ##TODO: it would be interesting if this section actually showed examples of bifurcations, etc..
-if __name__ == "main":
+if __name__ == "__main__":
     run_test()

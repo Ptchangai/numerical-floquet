@@ -123,8 +123,7 @@ def test_model():
     ...
     return
 
-
-if __name__ == "main":
+if __name__ == "__main__":
 
     ODE, length, t0, N, parameters = ...
 
