@@ -1,6 +1,9 @@
 # This script will be used to compare algorithms: speed, accuracy, stability, etc.
 
 import time
+import numpy as np
+
+from numerical_integration import *
 
 def compute_execution_time(method, function, param):
     """
@@ -13,17 +16,28 @@ def compute_execution_time(method, function, param):
     print(f"Execution time: {execution_time} seconds")
     return
 
-#TODO: complete function.
-def compute_accuracy(method, function, param):
+def compute_accuracy(method, ODE, param, true_solution=None):
     """
-    Measure accuracy of a numerical method for a given function
+    Measure accuracy of a numerical method for a given function.
+    - method: chosen numerical solver, e.g euler_step
+    - ODE: differential equation to solve, e.g exponential.
+    - param: needed parameters for the given ODE.
+    - true_solution: function that solves the ODE, if any.
     """
-    ...
-    return
+    initial_value = ...
+    step_size = ...
+    num_iterations = ...
+    t_values = np.arange(0, step_size*num_iterations + step_size, step_size)
+    numerical_solution =  solve_ode(initial_value, step_size, num_iterations, ODE, param, stepper_func=method)
+    true_solution = true_solution(t_values, param)
+    difference = np.abs(numerical_solution - true_solution)
+    accuracy = np.mean(difference)
+    return accuracy
 
 #TODO: complete function.
-"""
-Measure stability of a numerical method for a given function"""
 def compute_stability(method, function, param):
+    """
+    Measure stability of a numerical method for a given function
+    """
     ...
     return
