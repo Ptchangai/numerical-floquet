@@ -1,4 +1,5 @@
 #This file turns the Floquet algorithms into Neural Network algorithms. 
+import random
 
 import tensoflow as tf
 #Helper libraries
@@ -13,6 +14,7 @@ from kerastuner import HyperParameters
 from kerastuner.tuners import RandomSearch
 import random
 from scipy.integrate import odeint 
+from numerical_integration import RK4step
 #TODO: remplace scipy.integrate with by Assimulo integrator
 #TODO: use numba
 
@@ -86,6 +88,24 @@ def train_model(model, Xdf, Ydf, epochs=100, batch_size=70, validation_split=0.1
 #TODO: Adapt y0 to any size
 #TODO: keep h constant?
 #TODO: make time series rather than collection of random single steps. This way we can use it for LSTM.
+def generate_dataset(ode_func, param, num_samples=100, future_steps=5, t_step=0.001, state_range=(0,10), size=2):
+    """
+    Generate random data points of ODE integration
+    """
+    X = []
+    y = []
+    for _ in range(num_samples):
+        current_state = [np.random.uniform(state_range[0], state_range[2], size=2)]
+        states = [current_state]
+        for _ in range(future_steps):
+            next_state = RK4step(ode_func, current_state,0, t_step, param)
+            states.append(next_state)
+            current_state = next_state
+        X.append(states[0])
+        y.append(states[-1])
+
+    return np.array(X), np.array(y)   
+
 def create_dataset(ODE, length, t0, N, parameters):
     """
     Generate training dataset with random values, integrating given ODE using odeint.
