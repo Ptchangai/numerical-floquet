@@ -1,11 +1,37 @@
 import numpy as np
-
-#TODO
-def geometric_poincare():
+def geometric_poincare(ode_func, section, h, y0, params):
     """
     For a 2D ODE, approximate the first return time using some section of the orbit.
     """
-    ...
+    tol = 1e-5
+    t = np.arange(0, 20+h, h)
+    approx = np.zeros((len(t), len(y0)))
+    approx[0] = y0
+    number_intersection = 0
+    intersection_list = []
+
+    for i in range(len(t)-1):
+        approx[i+1] = RK4step(ode_func, approx[i], t[i], h, params)
+        x = segment_intersection(section[0], section[1], approx[i,:], approx[i+1,:])
+        if x:
+            print("Intersection at:", x)
+            intersection_list.append(x)
+            number_intersection += 1
+            if number_intersection == 5:
+                break
+    
+    plt.plot(section[:,0], section[:,1])
+    plt.plot(approx[:,0], approx[:,1])
+    for intersection in intersection_list:
+        plt.plot(intersection[0], intersection[1], 'x')
+    intersection_list = np.array(intersection_list)
+    if np.linalg.norm([np.linalg.norm(intersection_list[0] - intersection_list[-1])]) < tol:
+        print('Periodic solution')
+    else:
+        if intersection_list[0,1] < intersection_list[2,1]:
+            print('Non-periodic source solution')
+        elif intersection_list[0,1] > intersection_list[2,1]:
+            print('Non-periodic sink solution')
     return
 
 def jacobian_matrix(func, x, params):
